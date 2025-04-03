@@ -121,12 +121,20 @@ public class Player : MonoBehaviour
 
         if(prevLane != currentLane)
         {
-            transform.DOMoveX(currentLane * laneDistance, changeLaneSpeed)
-                .SetEase(changeLaneAnimation)
-                .OnComplete(() =>
-                {
+            float targetX = currentLane * laneDistance;
+            float startX = transform.position.x;
+            float elapsedTime = 0f;
 
-                });
+            DOTween.To(() => startX, x =>
+            {
+                Vector3 newPos = transform.position;
+                newPos.x = x;
+                controller.Move((newPos - transform.position)); // Use CharacterController.Move()
+            }, targetX, changeLaneSpeed)
+            .SetEase(changeLaneAnimation);
+
+
+
             float steer = val;
             DOTween.To(() => steer, x => steer = x, 0, changeLaneSpeed+0.5f)
             .SetEase(changeLaneAnimation)

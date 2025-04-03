@@ -16,6 +16,13 @@ public class DestroyTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag(destroyTag))
         {
+            if (!MainMenu.hasSarted)
+            {
+                Destroy(other.gameObject);
+                return;
+            }
+
+
             if (destroyType == DestroyType.Stop)
                 other.gameObject.GetComponent<MovingTween>().movingTween.Pause();
             else

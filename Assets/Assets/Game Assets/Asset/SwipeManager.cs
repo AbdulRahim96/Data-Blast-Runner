@@ -54,6 +54,8 @@ public class SwipeManager : MonoBehaviour
                 {
                     tap = isDragging = true;
                     startTouch = Input.touches[0].position;
+                    Vector3 targetPos = transform.position + new Vector3(3, 0, 0);
+                   // transform.position = targetPos;
                 }
                 else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
                 {

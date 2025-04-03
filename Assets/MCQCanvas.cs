@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,15 +7,16 @@ using UnityEngine.UI;
 
 public class MCQCanvas : MonoBehaviour
 {
-    public MCQ[] mcqs;
+    public Category[] category;
     private MCQ mcq;
     public TextMeshProUGUI questionText;
     public Button[] answerTexts;
+    public static int categoryIndex;
     void OnEnable()
     {
         Time.timeScale = 0;
-        int index = Random.Range(0, mcqs.Length);
-        mcq = mcqs[index];
+        int index = UnityEngine.Random.Range(0, category[categoryIndex].mcqs.Length);
+        mcq = category[categoryIndex].mcqs[index];
 
         questionText.text = mcq.question;
         for (int i = 0; i < answerTexts.Length; i++)
@@ -46,7 +48,7 @@ public class MCQCanvas : MonoBehaviour
             {
             if(correct)
             {
-                float probability = Random.Range(0, 1);
+                float probability = UnityEngine.Random.Range(0, 1);
                 if(probability > 0.5f)
                 {
                     FindObjectOfType<Powers>().ActivateBike();
@@ -64,4 +66,10 @@ public class MCQCanvas : MonoBehaviour
             transform.GetChild(1).localScale = Vector3.one;
         });
     }
+}
+
+[Serializable]
+public class Category
+{
+    public MCQ[] mcqs;
 }
