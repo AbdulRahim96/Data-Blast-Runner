@@ -48,8 +48,8 @@ public class MCQCanvas : MonoBehaviour
             {
             if(correct)
             {
-                float probability = UnityEngine.Random.Range(0, 1);
-                if(probability > 0.5f)
+                float probability = UnityEngine.Random.Range(0f, 1f);
+                    if (probability > 0.5f)
                 {
                     FindObjectOfType<Powers>().ActivateBike();
                 }

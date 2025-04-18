@@ -9,6 +9,7 @@ public class Powers : MonoBehaviour
     private Animator animator;
     public float duration = 10;
     public UnityEvent onBike, onRun;
+    public ParticleSystem effect;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,11 +25,16 @@ public class Powers : MonoBehaviour
     IEnumerator OnBike()
     {
         onBike.Invoke();
+        effect.Play();
+        effect.GetComponent<AudioSource>().Play();
         animator.SetBool("invehicle", true);
+        GetComponent<Player>().jumpHeight = 6;
         yield return new WaitForSeconds(duration);
 
         onRun.Invoke();
+        effect.Play();
         animator.SetBool("invehicle", false);
+        GetComponent<Player>().jumpHeight = 3;
 
     }
 }

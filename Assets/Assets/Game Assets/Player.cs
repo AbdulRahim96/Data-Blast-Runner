@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
 
     private float animationSpeed;
     private float runningSpeed;
+
+    public DOTweenAnimation bike;
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -149,6 +151,8 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         sound(jump);
+        if(bike.gameObject.activeInHierarchy)
+            bike.DORestart();
         velocity.y = Mathf.Sqrt(jumpHeight * 2 * -gravity);
         animator.SetTrigger("jump");
         isSliding = false;
