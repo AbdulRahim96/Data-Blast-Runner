@@ -289,6 +289,7 @@ public class Player : MonoBehaviour
         //effectsAnimation.SetBool("normal", true);
         sound(hitDie);
         yield return new WaitForSeconds(1.5f);
+        GameManager.OnGameOver?.Invoke();
         GameManager.Instance.endMenu.SetActive(true);
         Time.timeScale = 0;
 
@@ -312,7 +313,7 @@ public class Player : MonoBehaviour
 
     public void videoAdd()
     {
-        AdsManager.Instance.showRewardedVideo();
+        
     }
 
     public void closeCall(string text)

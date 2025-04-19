@@ -31,7 +31,7 @@ public class Score : MonoBehaviour
         multiplierSlider.maxValue = nextLevel;
         audioPitch = 1;
         coins = 0;
-        AdsManager.isMenu = false;
+        //AdsManager.isMenu = false;
        }
 
     void FixedUpdate()
