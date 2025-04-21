@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        if (hit.transform.tag == "Obstacles" && PowerUpsManager.fastRun == false)
+        if (hit.transform.tag == "Obstacles")
         {
             Debug.Log("Game over " + hit.gameObject.name);
             gameOver = true;
@@ -212,8 +212,6 @@ public class Player : MonoBehaviour
         {
             Destroy(hit.gameObject);
             StartCoroutine(traps());
-            PowerUpsManager.hit();
-            
         }
     }
 

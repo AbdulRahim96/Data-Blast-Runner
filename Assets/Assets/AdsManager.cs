@@ -9,6 +9,7 @@ public class AdsManager : MonoBehaviour
 {
     public static AdsManager Instance;
     public bool isTesting;
+    private BannerView _bannerView;
     private Action rewardedAction;
     private void Awake()
     {
@@ -30,8 +31,48 @@ public class AdsManager : MonoBehaviour
             print("Init sucess");
             LoadRewardedAd();
             LoadInterstitialAd();
+            LoadBannerAd();
         });
         GameManager.OnGameOver += ShowInterstitialAd;
+        ShowBannerAd();
+    }
+
+#if UNITY_ANDROID
+        public string bannerAdUnitId = "ca-app-pub-3940256099942544/6300978111"; // Test banner ID
+#elif UNITY_IPHONE
+    string bannerAdUnitId = "ca-app-pub-3940256099942544/2934735716"; // Test banner ID
+#else
+    string bannerAdUnitId = "unused";
+#endif
+
+    public void LoadBannerAd()
+    {
+        // Destroy any previous banner
+        if (_bannerView != null)
+        {
+            _bannerView.Destroy();
+            _bannerView = null;
+        }
+
+
+        AdSize adSize = AdSize.Banner; // Could use SmartBanner, MediumRectangle, etc.
+        AdPosition adPosition = AdPosition.Bottom; // Or Top, based on your UI
+
+        _bannerView = new BannerView(bannerAdUnitId, adSize, adPosition);
+
+        // Create an empty ad request
+        AdRequest adRequest = new AdRequest();
+
+        // Load the banner with the request
+        _bannerView.LoadAd(adRequest);
+
+        Debug.Log("Banner ad loaded.");
+    }
+
+    public void ShowBannerAd()
+    {
+        if (_bannerView != null)
+            _bannerView.Show();
     }
 
 
@@ -56,11 +97,13 @@ public class AdsManager : MonoBehaviour
         {
             _adUnitId = "ca-app-pub-3940256099942544/5224354917";
             _adUnitIdInterstitial = "ca-app-pub-3940256099942544/1033173712";
+            bannerAdUnitId = "ca-app-pub-3940256099942544/6300978111";
         }
         else
         {
             _adUnitId = "ca-app-pub-3753275009199310/5397594770";
             _adUnitIdInterstitial = "ca-app-pub-3753275009199310/2707002197";
+            bannerAdUnitId = "ca-app-pub-3753275009199310/7211438859";
         }
     }
     private RewardedAd _rewardedAd;
