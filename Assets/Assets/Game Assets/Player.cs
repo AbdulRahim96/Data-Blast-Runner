@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     private bool isSliding = false;
 
     public AudioSource source, actionAudios;
-    public AudioClip run, roll, jump, hitRoll, hitDie;
+    public AudioClip run, roll, jump, hitDie;
 
     private float animationSpeed;
     private float runningSpeed;
@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
         Time.timeScale = 1;
         GameObject sunLight = GameObject.Find("Directional Light");
         sunLight.transform.SetParent(transform);
-
     }
 
 
@@ -69,8 +68,8 @@ public class Player : MonoBehaviour
                 animationSpeed += speedRate / 10 * Time.deltaTime;
 
             runningSpeed = (forwardSpeed + powerSpeed) / 5;
-            animator.SetFloat("animation", runningSpeed);
-            animator.SetFloat("speed", animationSpeed);
+          //  animator.SetFloat("animation", runningSpeed);
+          //  animator.SetFloat("speed", animationSpeed);
 
 
             //animator.SetBool("run", isGrounded);
@@ -150,17 +149,12 @@ public class Player : MonoBehaviour
     }
     private void Jump()
     {
-        sound(jump);
-        if(bike.gameObject.activeInHierarchy)
-            bike.DORestart();
+        //sound(jump);
+      //  if(bike.gameObject.activeInHierarchy)
+       //     bike.DORestart();
         velocity.y = Mathf.Sqrt(jumpHeight * 2 * -gravity);
         animator.SetTrigger("jump");
         isSliding = false;
-        /*
-        if (PowerUpsManager.superJump == true)
-            animator.SetTrigger("super jump");
-        else
-            animator.SetTrigger("jump");*/
     }
 
     private void OnDrawGizmos()
@@ -208,11 +202,6 @@ public class Player : MonoBehaviour
             StartCoroutine(endMenu());
             respawnPosition.parent = null;
         }
-        if (hit.transform.tag == "Traps")
-        {
-            Destroy(hit.gameObject);
-            StartCoroutine(traps());
-        }
     }
 
     
@@ -220,6 +209,9 @@ public class Player : MonoBehaviour
 
     private IEnumerator Slide()
     {
+        print("Swipe Down");
+        yield return null;
+        /*
         isSliding = true;
         animator.SetTrigger("roll");
         controller.height = 0.5f;
@@ -228,47 +220,22 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1.25f);
         controller.height = 2.44f;
         controller.center = new Vector3(0, charactorHeight, 0);
-        isSliding = false;
-    }
-
-    private IEnumerator traps()
-    {
-        animator.SetBool("slip", true);
-        if(forwardSpeed > 10)
-            forwardSpeed -= 5;
-       // var score = FindObjectOfType<Score>();
-       // score.currentLevel = 1;
-       // score.multiplier = score.multiplierSlider.minValue;
-        SwipeManager.disable = true;
-        sound(hitRoll);
-        yield return new WaitForSeconds(2);
-        animator.SetBool("slip", false);
-        SwipeManager.disable = false;
-        CloseCalls.JumpCount = 0;
+        isSliding = false;*/
     }
 
     public void sound(AudioClip clip)
     {
-        try
-        {
-            actionAudios.clip = clip;
-            actionAudios.Play();
-            
-        }
-        catch
-        {
-            Debug.Log("no sound"); 
-        }
-
+        actionAudios.clip = clip;
+        actionAudios.Play();
     }
 
     public void FootEvent(AnimationEvent animationEvent)
     {
        // print($"Float {animationEvent.floatParameter}: Int {animationEvent.intParameter}: string {animationEvent.stringParameter}: object {animationEvent.objectReferenceParameter.name}");
-        Vector3 FootPoint = animationEvent.intParameter == 0? animator.GetIKPosition(AvatarIKGoal.LeftFoot) : animator.GetIKPosition(AvatarIKGoal.RightFoot);
-        GameObject obj = Instantiate(animationEvent.objectReferenceParameter.GameObject(), transform.position + FootPoint, Quaternion.identity);
+       // Vector3 FootPoint = animationEvent.intParameter == 0? animator.GetIKPosition(AvatarIKGoal.LeftFoot) : animator.GetIKPosition(AvatarIKGoal.RightFoot);
+       // GameObject obj = Instantiate(animationEvent.objectReferenceParameter.GameObject(), transform.position + FootPoint, Quaternion.identity);
         sound(run);
-        Destroy(obj, 1);
+       // Destroy(obj, 1);
     }
 
     public IEnumerator endMenu()
@@ -293,11 +260,6 @@ public class Player : MonoBehaviour
 
     }
 
-   public void setPower(float pow)
-    {
-        powerSpeed = pow;
-    }
-
     public void Continue()
     {
         var player = FindObjectOfType<Player>().transform;
@@ -307,11 +269,6 @@ public class Player : MonoBehaviour
         PowerUpsManager.Condition();
         respawnPosition = player;
         gameOver = false;
-    }
-
-    public void videoAdd()
-    {
-        
     }
 
     public void closeCall(string text)

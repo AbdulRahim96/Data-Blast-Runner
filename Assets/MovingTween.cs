@@ -6,4 +6,12 @@ using UnityEngine;
 public class MovingTween : MonoBehaviour
 {
     public Tween movingTween;
+
+    private void OnDestroy()
+    {
+        if (movingTween != null)
+        {
+            movingTween.Kill();
+        }
+    }
 }

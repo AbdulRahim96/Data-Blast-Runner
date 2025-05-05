@@ -8,7 +8,7 @@ using Sirenix.OdinInspector;
 public class EndlessRoadManager : MonoBehaviour
 {
     public static EndlessRoadManager instance;
-    public List<GameObject> roads;
+    public List<GameObject> currentRoads, roadPool;
     public float offset = 60f;
 
     private void Awake()
@@ -19,12 +19,23 @@ public class EndlessRoadManager : MonoBehaviour
     [Button("Update Road")]
     public void MoveRoad()
     {
-        GameObject movedRoad = roads[Random.Range(0,2)];
-        roads.Remove(movedRoad);
-        Vector3 newPos = roads[roads.Count - 1].transform.position;
-        movedRoad.transform.position = new Vector3(0, newPos.y, newPos.z + offset);
-        roads.Add(movedRoad);
-        movedRoad.transform.SetAsLastSibling();
-        
+        GameObject movedRoad = currentRoads[0];
+        currentRoads.Remove(movedRoad);
+        roadPool.Add(movedRoad);
+        movedRoad.SetActive(false);
+
+        Vector3 newPos = currentRoads[currentRoads.Count - 1].transform.position;
+        GameObject newRoad = GetAvailableRoad();
+        newRoad.SetActive(true);
+        newRoad.transform.position = new Vector3(0, newPos.y, newPos.z + offset);
+        roadPool.Remove(newRoad);
+        currentRoads.Add(newRoad);
+        newRoad.transform.SetAsLastSibling();
+    }
+
+    private GameObject GetAvailableRoad()
+    {
+        GameObject road = roadPool[Random.Range(0, roadPool.Count)];
+        return road;
     }
 }

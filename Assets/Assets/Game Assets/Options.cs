@@ -30,13 +30,13 @@ public class Options : MonoBehaviour
     }
     public void deadZone(float d)
     {
-        SwipeManager.offset = d;
+        SwipeManager.Offset = d;
     }
 
     public void save()
     {
         PlayerPrefs.SetFloat("x", CameraFollow.smoothSpeedx);
         PlayerPrefs.SetFloat("y", CameraFollow.smoothSpeedy);
-        PlayerPrefs.SetFloat("deadzone", SwipeManager.offset);
+        PlayerPrefs.SetFloat("deadzone", SwipeManager.Offset);
     }
 }
