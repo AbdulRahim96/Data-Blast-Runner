@@ -73,4 +73,9 @@ public class Camera_Orbit : MonoBehaviour
         noise.m_AmplitudeGain = amp;
         noise.m_FrequencyGain = freq;*/
     }
+
+    public void SetFarClipPlane(float val)
+    {
+        cinemachineCamera.m_Lens.FarClipPlane = val;
+    }
 }

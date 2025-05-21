@@ -34,7 +34,7 @@ public class MCQCanvas : MonoBehaviour
         int soundIndex = ans ? 1 : 2;
         answerTexts[answer].GetComponent<Image>().color = color;
         answerTexts[answer].GetComponent<DOTweenAnimation>().DORestart();
-        SoundManager.onPlay?.Invoke(soundIndex);
+        SoundManager.instance.OnPlay(soundIndex);
         CloseCanvas(ans);
         print("Answer: " + ans);
     }

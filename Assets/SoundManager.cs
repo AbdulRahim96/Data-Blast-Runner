@@ -6,32 +6,24 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static Action<int> onPlay;
-    public static Action<float> onPitch;
+    public static SoundManager instance;
     private AudioSource audioSource;
     public AudioClip[] audioClips;
 
     private Tween tween;
     private void Awake()
     {
-        onPlay = null;
-        onPitch = null;
+        instance = this;
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void Start()
-    {
-        onPlay += OnPlay;
-        onPitch += OnPitch;
-    }
-
-    private void OnPlay(int index)
+    public void OnPlay(int index)
     {
         audioSource.clip = audioClips[index];
         audioSource.Play();
     }
 
-    private void OnPitch(float pitch)
+    public void OnPitch(float pitch)
     {
         audioSource.pitch += pitch;
         if(tween != null)

@@ -1,111 +1,124 @@
-using System.Collections;
 using UnityEngine;
 
 public class SwipeManager : MonoBehaviour
 {
-    public static bool Tap, swipeLeft, swipeRight, swipeUp, swipeDown;
-    public static float Offset = 125f;
 
-    private Vector2 startTouch;
-    private Vector2 swipeDelta;
+    public static bool tap, swipeLeft, swipeRight, swipeUp, swipeDown, disable;
+    private Vector2 startTouch, swipeDelta;
+    private bool isDragging = false;
+    public static float offset = 1f; // DeadZone Offset
 
-    public Vector2 SwipeDelta => swipeDelta;
-    public bool IsTap => Tap;
-    public bool IsSwipeLeft => swipeLeft;
-    public bool IsSwipeRight => swipeRight;
-    public bool IsSwipeUp => swipeUp;
-    public bool IsSwipeDown => swipeDown;
+    public Vector2 SwipeDelta { get { return swipeDelta; } }
+    public bool Tap { get { return tap; } }
+    public bool SwipLeft { get { return swipeLeft; } }
+    public bool SwipeRight { get { return swipeRight; } }
+    public bool SwipeUp { get { return swipeUp; } }
+    public bool SwipeDown { get { return swipeDown; } }
 
-    private void Awake()
+    private void Start()
     {
-        Offset = PlayerPrefs.GetFloat("deadzone", 125f);
+        offset = PlayerPrefs.GetFloat("deadzone", 125f);
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        swipe();
     }
 
-    private void OnEnable()
+    private void swipe()
     {
-        StartCoroutine(SwipeListener());
-    }
-
-    private IEnumerator SwipeListener()
-    {
-        while (true)
+        if (disable == false)
         {
-            Tap = swipeLeft = swipeRight = swipeUp = swipeDown = false;
+            tap = swipeLeft = swipeRight = swipeUp = swipeDown = false;
 
-            // Detect input begin
-            if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+            #region Standalone
+            if (Input.GetMouseButtonDown(0))
             {
-                Tap = true;
-                startTouch = Input.touches[0].position;
-                yield return WaitForEndOrCancelTouch();
-            }
-            else if (Input.GetMouseButtonDown(0))
-            {
-                Tap = true;
+                tap = isDragging = true;
                 startTouch = Input.mousePosition;
-                yield return WaitForEndOrCancelMouse();
             }
-
-            yield return null;
-        }
-    }
-
-    private IEnumerator WaitForEndOrCancelTouch()
-    {
-        while (Input.touchCount > 0 &&
-               (Input.touches[0].phase == TouchPhase.Moved || Input.touches[0].phase == TouchPhase.Stationary))
-        {
-            swipeDelta = Input.touches[0].position - startTouch;
-
-            if (swipeDelta.magnitude > Offset)
+            else if (Input.GetMouseButtonUp(0))
             {
-                DetectSwipeDirection(swipeDelta);
-                break;
+                isDragging = false;
+                Reset();
             }
+            #endregion
 
-            yield return null;
-        }
+            #region Mobile Controls
 
-        Reset();
-    }
-
-    private IEnumerator WaitForEndOrCancelMouse()
-    {
-        while (Input.GetMouseButton(0))
-        {
-            swipeDelta = (Vector2)Input.mousePosition - startTouch;
-
-            if (swipeDelta.magnitude > Offset)
+            if (Input.touchCount > 0)
             {
-                DetectSwipeDirection(swipeDelta);
-                break;
+                if (Input.touches[0].phase == TouchPhase.Began)
+                {
+                    tap = isDragging = true;
+                    startTouch = Input.touches[0].position;
+                    Vector3 targetPos = transform.position + new Vector3(3, 0, 0);
+                    // transform.position = targetPos;
+                }
+                else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
+                {
+                    isDragging = false;
+                    Reset();
+                }
             }
+            #endregion
 
-            yield return null;
-        }
+            #region Distance Calculations
+            swipeDelta = Vector2.zero;
+            if (isDragging)
+            {
+                if (Input.touchCount > 0)
+                {
+                    swipeDelta = Input.touches[0].position - startTouch;
+                }
+                else if (Input.GetMouseButton(0))
+                {
+                    swipeDelta = (Vector2)Input.mousePosition - startTouch;
+                }
+            }
+            #endregion
 
-        Reset();
-    }
+            #region Direction Define
+            if (swipeDelta.magnitude > offset)
+            {
+                float x = swipeDelta.x;
+                float y = swipeDelta.y;
 
-    private void DetectSwipeDirection(Vector2 delta)
-    {
-        float x = delta.x;
-        float y = delta.y;
-
-        if (Mathf.Abs(x) > Mathf.Abs(y))
-        {
-            if (x > 0) swipeRight = true;
-            else swipeLeft = true;
-        }
-        else
-        {
-            if (y > 0) swipeUp = true;
-            else swipeDown = true;
+                if (Mathf.Abs(x) > Mathf.Abs(y))
+                {
+                    if (x > 0)
+                    {
+                        swipeRight = true;
+                        Debug.Log("right");
+                    }
+                    else
+                    {
+                        swipeLeft = true;
+                        Debug.Log("left");
+                    }
+                }
+                else
+                {
+                    if (y > 0)
+                    {
+                        swipeUp = true;
+                        Debug.Log("up");
+                    }
+                    else
+                    {
+                        swipeDown = true;
+                        Debug.Log("down");
+                    }
+                }
+                Reset();
+            }
+            #endregion
         }
     }
 
     private void Reset()
     {
-        startTouch = swipeDelta = Vector2.zero;
+        swipeDelta = startTouch = Vector2.zero;
+        isDragging = false;
     }
 }

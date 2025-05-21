@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class RespawnObjects : MonoBehaviour
@@ -8,10 +9,12 @@ public class RespawnObjects : MonoBehaviour
     public bool powers = false;
     public GameObject[] powerUps;
 
-    public void respawn(GameObject obj)
+    public async Task respawn(GameObject obj)
     {
         //StartCoroutine(respawnRoutine());
-        StartCoroutine(RespawnPool(obj));
+        //StartCoroutine(RespawnPool(obj));
+        await Task.Delay(20000);
+        obj.SetActive(true);
     }
     public IEnumerator respawnRoutine()
     {

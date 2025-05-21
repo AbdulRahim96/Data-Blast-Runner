@@ -15,7 +15,9 @@ public class Icons : MonoBehaviour
         Transform parent = transform.parent;
         transform.SetParent(Player);
         Vector3 initialPos = transform.position;
-        transform.DOLocalMove(Vector3.zero, _speed).SetEase(Ease.Linear).OnComplete(
+        transform.DOLocalMove(Vector3.zero, _speed)
+            .SetEase(Ease.Linear)
+            .OnComplete(
             () =>
             {
                 Player.GetComponent<ParticleSystem>().Play();
@@ -24,8 +26,8 @@ public class Icons : MonoBehaviour
                 transform.position = initialPos;
                 gameObject.SetActive(false);
                 GameManager.OnScoreChanged?.Invoke(points);
-                SoundManager.onPlay?.Invoke(0);
-                SoundManager.onPitch?.Invoke(0.03f);
+                SoundManager.instance.OnPlay(0);
+                 SoundManager.instance.OnPitch(0.03f);
             });
     }
 }

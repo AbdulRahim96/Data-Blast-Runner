@@ -35,6 +35,7 @@ Transform:
   - {fileID: 2365550998872452221}
   - {fileID: 5961997374595190636}
   - {fileID: 7652603036937352678}
+  - {fileID: 567942559413917316}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &5611757913421613480
@@ -152,8 +153,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.6675076, y: 6.099486, z: 20.3026}
-  m_Center: {x: 0, y: 2.0861533, z: -2.7960262}
+  m_Size: {x: 7.6675076, y: 3.634846, z: 20.3026}
+  m_Center: {x: 0, y: 0.85383385, z: -2.796026}
 --- !u!114 &8815745764029623513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +167,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f10c729cd86c04da319ef0185714fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2827915669284218601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 567942559413917316}
+  - component: {fileID: 8929514141454988663}
+  - component: {fileID: 1751398620993374015}
+  - component: {fileID: 2527306189015415118}
+  m_Layer: 0
+  m_Name: Stop Vehicle Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &567942559413917316
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2827915669284218601}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.43, z: -15.29}
+  m_LocalScale: {x: 0.863369, y: 0.8633689, z: 0.863369}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7105586050708936227}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &8929514141454988663
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2827915669284218601}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1751398620993374015
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2827915669284218601}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8.513785, y: 3.9004233, z: 2}
+  m_Center: {x: 0, y: 0.9502114, z: 0}
+--- !u!114 &2527306189015415118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2827915669284218601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9b53f510fc35c41865d0a93775334b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTag: Obstacles
+  destroyType: 1
 --- !u!1 &3718943845501549023
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,11 +450,74 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4504409719310791647, guid: 80b91831c1ef8744594883bd62509a52,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3696833627954302213}
+    - targetCorrespondingSourceObject: {fileID: -3778644264426962316, guid: 80b91831c1ef8744594883bd62509a52,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2947806149526325136}
   m_SourcePrefab: {fileID: 100100000, guid: 80b91831c1ef8744594883bd62509a52, type: 3}
+--- !u!1 &1863498086496057417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4504409719310791647, guid: 80b91831c1ef8744594883bd62509a52,
+    type: 3}
+  m_PrefabInstance: {fileID: 2836873473679264662}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &3696833627954302213
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863498086496057417}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2911736426955009642, guid: 80b91831c1ef8744594883bd62509a52, type: 3}
 --- !u!4 &2365550998872452221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 80b91831c1ef8744594883bd62509a52,
     type: 3}
   m_PrefabInstance: {fileID: 2836873473679264662}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7841073075333499362 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3778644264426962316, guid: 80b91831c1ef8744594883bd62509a52,
+    type: 3}
+  m_PrefabInstance: {fileID: 2836873473679264662}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2947806149526325136
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7841073075333499362}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.076415814, y: 0.139803, z: 0.016375005}
+  m_Center: {x: 0, y: 0.06141745, z: 0.043282807}

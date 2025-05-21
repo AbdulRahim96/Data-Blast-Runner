@@ -249,10 +249,8 @@ public class Player : MonoBehaviour
             })
             .SetEase(Ease.Linear);
 
-        // effectsAnimation.Play("Die effects");
         animator.SetBool("isHit", true);
-        //effectsAnimation.SetBool("normal", true);
-        sound(hitDie);
+       // sound(hitDie);
         yield return new WaitForSeconds(1.5f);
         GameManager.OnGameOver?.Invoke();
         GameManager.Instance.endMenu.SetActive(true);
@@ -279,5 +277,10 @@ public class Player : MonoBehaviour
         obj.transform.position = transform.position;
         obj.GetComponentInChildren<Text>().text = text;
         Destroy(obj, 2);*/
+    }
+
+    public void setPower(float val)
+    {
+        powerSpeed = val;
     }
 }
