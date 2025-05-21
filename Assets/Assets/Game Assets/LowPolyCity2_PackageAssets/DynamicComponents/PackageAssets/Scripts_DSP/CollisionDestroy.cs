@@ -81,7 +81,7 @@ public class CollisionDestroy : MonoBehaviour {
 		playAudio ();
 		// Destruction will occur at a minimum velocity
 		// It can be 0 if you want no minimum velocity
-		if (other.attachedRigidbody.velocity.magnitude > minVelocityToDestroy) {
+		if (other.attachedRigidbody.linearVelocity.magnitude > minVelocityToDestroy) {
 			destroyIfCollision ();
 			for(i=0;i<effects.Length;i++) {
 				if(effects[i].getPlayedStatus()==false) {
