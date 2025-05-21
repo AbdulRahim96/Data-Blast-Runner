@@ -254,6 +254,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         GameManager.OnGameOver?.Invoke();
         GameManager.Instance.endMenu.SetActive(true);
+        AdMobManager.Instance.ShowInterstitial();
         Time.timeScale = 0;
 
     }
